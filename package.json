@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "install-dependencies": "npm ci && cd server && npm ci && cd ../client && npm ci",
+    "server": "cd server && npm run start",
+    "client": "cd client && npm run start"
   },
   "private": true,
   "dependencies": {
