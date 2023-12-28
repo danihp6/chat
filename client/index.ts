@@ -11,22 +11,28 @@ function main() {
   const name = process.argv[2];
   const ws = new WebSocket('ws://localhost:8000');
 
-  ws.on('open', () => {
-    ws.send(JSON.stringify({
-      name
-    }));
+  subscribe();
 
-    rl.on('line', (input) => {
-      ws.send(JSON.stringify({
-        text: input
-      }));
+  function subscribe() {
+    ws.on('open', () => {
+      sendMessage(name)
+
+      rl.on('line', (input) => {
+        sendMessage(input);
+      });
     });
-  });
 
-  ws.on('message', raw => {
-    const message = JSON.parse(raw.toString('utf8'));
-    printMessage(message);
-  });
+    ws.on('message', raw => {
+      const message = JSON.parse(raw.toString('utf8'));
+      printMessage(message);
+    });
+  }
+
+  function sendMessage(message: string) {
+    ws.send(JSON.stringify({
+      text: message
+    }));
+  }
 }
 
 main();
