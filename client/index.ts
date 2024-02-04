@@ -15,7 +15,9 @@ function main() {
 
   function subscribe() {
     ws.on('open', () => {
-      sendMessage(name)
+      ws.send(JSON.stringify({
+        name
+      }));
 
       rl.on('line', (input) => {
         sendMessage(input);
